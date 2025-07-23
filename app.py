@@ -686,7 +686,7 @@ if pagina_selecionada == "Análise Exploratória":
 
     st.markdown("---")
 
-    st.markdown("### 3. OCONCLUSÃO GERAL")
+    st.markdown("### 3. CONCLUSÃO GERAL")
     st.markdown('A análise dos dados dos candidatos processados pela Decision, considerando aspectos demográficos, educacionais e comportamentais, revela oportunidades estratégicas significativas para otimização do processo seletivo e aumento da assertividade nas contratações para os clientes da empresa.')
     st.markdown('#### Principais Insights Integrados')
     st.markdown('* Perfil Demográfico: A maior parte dos candidatos é composta por homens entre 51 e 60 anos, o que pode indicar uma base madura, porém exige atenção quanto à atualização técnica e aderência a perfis buscados em TI.')
@@ -779,7 +779,29 @@ elif pagina_selecionada == "Relatório ML":
     st.markdown("* Variedade de Vagas: A grande diversidade das vagas, que exigem diferentes conjuntos de competências e experiências, representa um desafio significativo para modelos de Machine Learning tradicionais.")
     st.markdown("* Variedade de Clientes: Mesmo vagas aparentemente similares (ex: Desenvolvedor Júnior) podem apresentar peculiaridades e requisitos específicos de cada cliente, o que dificulta a generalização do modelo.")
     st.markdown("* Variedade de Perfis de Candidatos: Candidatos possuem características únicas e nuances contextuais que são intrinsecamente difíceis de serem traduzidas e representadas em um formato estruturado para um modelo tradicional.")
-    st.markdown("Considerando os desafios mencionados e a necessidade crítica de um modelo capaz de interpretar contextos complexos e nuances, uma solução promissora seria a utilização de modelos de Linguagem de Grande Escala (LLMs). Modelos mais avançados, que empregam técnicas como 'Chain of Thought', poderiam oferecer uma capacidade superior de compreensão e raciocínio contextual, tornando-os mais aptos a lidar com a complexidade do processo seletivo da Decision.")
+    st.markdown("Considerando os desafios mencionados e a necessidade crítica de um modelo capaz de interpretar contextos complexos e nuances, uma solução promissora seria a utilização de modelos de Linguagem de Grande Escala (LLMs). Modelos mais avançados, que empregam técnicas como 'Chain of Thought', poderiam oferecer uma capacidade superior de compreensão e raciocínio contextual, tornando-os mais aptos a lidar com a complexidade do processo seletivo da Decision. Com esse cenário em mente, elaboramos a arquitetura abaixo para o uso da Decision.")
+
+    st.markdown("---")
+
+    st.markdown("### ARQUITETURA PROPOSTA PARA AVALIAÇÃO DE CURRÍCULOS COM AWS")
+    st.image('AWS.jpg')
+    st.markdown("Esta arquitetura foi desenhada para um serviço de avaliação de currículos de candidatos, utilizando uma série de serviços da AWS para garantir escalabilidade e eficiência.")
+    st.markdown("1. Gerenciamento e Versionamento do Código")
+    st.markdown("* Bitbucket e AWS CloudFormation serão utilizados para gerenciar o código-fonte e versionar a infraestrutura como código, respectivamente.")
+    st.markdown("2. Aplicação")
+    st.markdown("* API Gateway será usado para dois propósitos principais:")
+    st.markdown("* * Receber o upload dos currículos, que serão armazenados no S3.")
+    st.markdown("* * Disponibilizar a consulta do resultado da avaliação após o processamento.")
+    st.markdown("* Um trigger será configurado no S3 para enviar uma mensagem ao SQS sempre que um novo currículo for adicionado.")
+    st.markdown("* O SQS será responsável por gerenciar a fila de currículos a serem processados, evitando sobrecarga na função Lambda.")
+    st.markdown("* As informações sobre a vaga de emprego serão armazenadas no DynamoDB.")
+    st.markdown("* O modelo de LLM (Large Language Model) será utilizado a partir do Bedrock.")
+    st.markdown("* Uma função Lambda, escrita em Python, será responsável por orquestrar o processo de avaliação:")
+    st.markdown("* * Iniciar o fluxo de processamento ao receber uma mensagem do SQS.")
+    st.markdown("* * Ler o currículo do bucket S3.")
+    st.markdown("* * Consultar as informações da vaga no DynamoDB.")
+    st.markdown("* * Realizar a comparação entre o currículo e a vaga, utilizando a LLM no Bedrock.")
+    st.markdown("* * Armazenar o resultado da avaliação no DynamoDB.")
 
 # Conteúdo da página Modelo de previsão
 elif pagina_selecionada == "Modelo de previsão":
